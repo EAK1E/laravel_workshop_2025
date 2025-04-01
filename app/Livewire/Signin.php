@@ -38,6 +38,8 @@ class Signin extends Component
         if (!$user) {
             $this->error = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
         } else {
+            session()->put('user_id', $user->id);
+            session()->put('user_name', $user->name);
             $this->redirect('/dashboard');
         }
     }
