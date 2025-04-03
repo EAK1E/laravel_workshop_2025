@@ -1,8 +1,8 @@
 <div class="navbar">
-    <div class="flex items-center justify-between">
-        <div>
-            <i class="fa-solid fa-user me-2"></i>
-            <span class="username">{{ $user_name }}</span>
+    <div class="flex justify-center items-center">
+        <div class="bg-blue-100 p-3 rounded-full mr-3">
+            <i class="fas fa-user text-blue-600"></i>
+            <span class="username text-lg font-medium text-gray-800">{{ $user_name }}</span>
         </div>
         <div>
             <button wire:click="showModal = true" 
@@ -11,8 +11,9 @@
                 <i class="fa-solid fa-sign-out-alt"></i>
             </button>
         </div>
-        
     </div>
+
+
 
     <x-modal wire:model="showModal" maxWidth="sm" title="ออกจากระบบ">
         <div class="text-center">
@@ -33,3 +34,5 @@
         </div>
     </x-modal>
 </div>
+
+
