@@ -22,8 +22,8 @@ class Customer extends Component {
     public function render() {
         return view('customer');
     }
-    public funtion fetchData() {
-        
+    public function fetchData() {
+
     }
 }
 ?>
