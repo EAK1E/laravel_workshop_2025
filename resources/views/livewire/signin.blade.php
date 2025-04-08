@@ -16,7 +16,7 @@
             @endif
 
             <div class="mt-2">Password</div>
-            <input type="password"wire:model="password" class="form-control" />
+            <input type="password" wire:model="password" class="form-control" />
             @if (isset($errorPassword))
                 <div class="text-red-500 mt-2">
                     <i class="fa fa-exclamation-triangle me-2"></i>

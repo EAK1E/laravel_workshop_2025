@@ -6,6 +6,15 @@
 .btn {
     @apply bg-blue-500 text-white px-4 py-2 rounded-md;
 }
+
+.btn-edit {
+    @apply hover:bg-blue-900;
+}
+
+.btn-delete {
+    @apply hover:bg-red-900;
+}
+
 .btn-primary {
     @apply bg-cyan-800 text-white px-6 py-3 rounded-2xl hover:bg-green-700 shadow-gray-500 shadow-md;
 }
@@ -93,18 +102,30 @@
     @apply w-full;
 }
 
+.table td {
+    @apply pl-3 p-2 bg-gray-100;
+}
+
 .table th {
     @apply bg-gray-400 p-2 pl-3;
 }
 
 .table th:first-child{
-    @apply rounded-tl-md;
+    @apply rounded-tl-2xl;
 }
 
 .table th:last-child{
-    @apply rounded-bl-md;
+    @apply rounded-bl-2xl;
 }
 
 .table tr:last-child td:last-child{
-    @apply rounded-br-md;
+    @apply rounded-br-2xl;
+}
+
+.tbody tr {
+    @apply border-b border-gray-300;
+}
+
+.tbody tr:last-child {
+    @apply border-b-0;
 }
