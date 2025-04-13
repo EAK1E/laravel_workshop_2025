@@ -20,7 +20,10 @@ class Customer extends Component {
     public $roomId;
     public $createdAt;
     public $stayType = 'd'; //รายวัน (d), รายเดือน (m)
+<<<<<<< HEAD
     public $roomIdMove;
+=======
+>>>>>>> fffa9d9b03335c23374c1b936d42c2977d08ecaa
 
     public function mount() {
         $this->fetchData();
@@ -52,7 +55,10 @@ class Customer extends Component {
         if($this->id){
             $customer = CustomerModel::find($this->id);
         } else {
+<<<<<<< HEAD
             /* dd($this->room); */
+=======
+>>>>>>> fffa9d9b03335c23374c1b936d42c2977d08ecaa
             $customer->room_id = $this->roomId;
         }
 
@@ -122,6 +128,7 @@ class Customer extends Component {
     public function render() {
         /* dd($this->name, $this->roomId, $this->rooms, $this->customers); */
         return view('livewire.customer');
+<<<<<<< HEAD
     }
 
     public function openModalMove($id){
@@ -153,6 +160,8 @@ class Customer extends Component {
         $this->showModalMove = false;
         $this->fetchData();
 
+=======
+>>>>>>> fffa9d9b03335c23374c1b936d42c2977d08ecaa
     }
 }
 ?>
