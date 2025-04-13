@@ -1,4 +1,4 @@
-@props(['id', 'maxWidth', 'title'])
+@props(['id', 'maxWidth', 'title', 'zIndex'])
 
 @php
 $id = $id ?? md5($attributes->wire('model'));
@@ -9,6 +9,8 @@ $maxWidth = [
     'xl' => 'sm:max-w-xl',
     '2xl' => 'sm:max-w-2xl',
     ][$maxWidth ?? '2xl'];
+
+    $zIndex = $zIndex ?? 999;
 @endphp
 
 <div
@@ -16,7 +18,7 @@ $maxWidth = [
     x-on:cloase.stop="show = false"
     x-on:keydown.escape.window="show = false"
     x-show="show"
-    class="fixed inset-0 z-50 px-4 py-6 overflow-y-auto"
+    class="fixed inset-0 z-{{ $zIndex }} px-4 py-6 overflow-y-auto"
     style="display: none;"
 >
     <div class="fixed inset-0 transform transition-all" x-on:click="show = false">
