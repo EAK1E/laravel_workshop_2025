@@ -161,11 +161,11 @@ class Pay extends Component {
 
         foreach ($arrayPayLogAmount as $key => $value) {
             $payLog = new PayLogModel();
-            $payLog -> pay_date = $this->payLogDate;
-            $payLog -> amount = $this->$value;
-            $payLog -> pay_id = $this->$key;
-            $payLog -> status = 'use';
-            $payLog -> save();
+            $payLog->pay_date = $this->payLogDate;
+            $payLog->amount = $value;
+            $payLog->pay_id = $key;
+            $payLog->status = 'use';
+            $payLog->save();
         }
         $this->closeModalPayLog();
         $this->fetchData();

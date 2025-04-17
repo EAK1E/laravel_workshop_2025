@@ -28,13 +28,10 @@
                         <td>{{ $customer->stay_type == 'd' ? 'รายวัน' : 'รายเดือน' }}</td>
                         <td>{{ $customer->remark }}</td>
                         <td class="text-center">
-<<<<<<< HEAD
                             <button class="btn-warning" wire:click="openModalMove({{ $customer->id }})">
                                 <i class="fa-solid fa-person-shelter"></i>
 
                             </button>
-=======
->>>>>>> fffa9d9b03335c23374c1b936d42c2977d08ecaa
                             <button class="btn-success" wire:click="openModalEdit({{ $customer->id }})">
                                 <i class="fa-solid fa-pencil"></i>
                             </button>
@@ -96,7 +93,6 @@
                 <i class="fa-solid fa-times"></i>
                 ยกเลิก
             </button>
-<<<<<<< HEAD
         </div>
 </x-modal>
 
@@ -126,12 +122,6 @@
 </x-modal>
 
 <x-modal-confirm showModalDelete="showModalDelete" title="ลบผู้เข้าพัก" text="คุณต้องการลบผู้เข้าพักใช่หรือไม่"
-=======
-        </div>x
-</x-modal>
-
-<x-modal-confirm wire:model="showModalDelete" title="ลบผู้เข้าพัก" text="คุณต้องการลบผู้เข้าพักใช่หรือไม่"
->>>>>>> fffa9d9b03335c23374c1b936d42c2977d08ecaa
     clickConfirm="delete" clickCancel="closeModalDelete">
 </x-modal-confirm>
 </div>
