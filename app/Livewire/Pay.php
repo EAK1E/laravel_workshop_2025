@@ -185,8 +185,9 @@ class Pay extends Component {
         $payLog->remark = $this->payLogEditRemark;
         $payLog->save();
 
+        $this->closeModalPayLogEdit();
         $this->fetchData();
-        $this->closeModalPayLogEdit;
+
     }
 }
 ?>

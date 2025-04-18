@@ -39,6 +39,7 @@ class Signin extends Component
        if ($user && Hash::check($this->password, $user->password)) {
         session()->put('user_id', $user->id);
         session()->put('user_name', $user->name);
+        session()->put('level', $user->level);
         $this->redirect('/dashboard');
        } else {
         $this->error = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';

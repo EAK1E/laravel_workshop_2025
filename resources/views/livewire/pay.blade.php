@@ -122,6 +122,7 @@
     </tbody>
  </table>
 </x-modal>
+
 <x-modal-confirm title="ยืนยันการลบ" text= "คุณต้องการลบรายการ {{ $payNameForDelete }} ใช่หรือไม่"
  showModalDelete="showModalPayDelete" maxWidth="sm" clickConfirm="deletePay()"
  clickCancel="closeModalPayDelete()" />
