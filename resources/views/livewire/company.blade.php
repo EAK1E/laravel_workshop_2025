@@ -36,6 +36,38 @@
             <label for="logo">โลโก้</label>
             <input type="file" class="form-control" bg-white wire:model="logo">
         </div>
+        <div class="flex gep-3 mt-3">
+            <div class="w-1/5">
+                <div>
+                    <div for="amount_water" class="text-right">ค่าน้ำ/เดือน</div>
+                    <input type="number" class="form-control text-right" wire:model="amount_water">
+                </div>
+            </div>
+            <div class="w-1/5">
+                <div>
+                    <div for="amount_water_per_unit" class="text-right">ค่าน้ำ/หน่วย</div>
+                    <input type="number" class="form-control text-right" wire:model="amount_water_per_unit">
+                </div>
+            </div>
+            <div class="w-1/5">
+                <div>
+                    <div for="amount_electric_per_unit" class="text-right">ค่าไฟฟ้า/หน่วย</div>
+                    <input type="number" class="form-control text-right" wire:model="amount_electric_per_unit">
+                </div>
+            </div>
+            <div class="w-1/5">
+                <div>
+                    <div for="amount_internet" class="text-right">ค่าอินเทอร์เน็ต</div>
+                    <input type="number" class="form-control text-right" wire:model="amount_internet" >
+                </div>
+            </div>
+            <div class="w-1/5">
+                <div>
+                    <div for="amount_etc" class="text-right">ค่าอื่นๆ</div>
+                    <input type="number" class="form-control text-right" wire:model="amount_etc" >
+                </div>
+            </div>
+        </div>
         <button type="submit" class="btn btn-primary mt-3">
             <i class="fa fa-check mr-2"></i>
             บันทึก

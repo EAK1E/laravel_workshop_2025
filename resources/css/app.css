@@ -129,3 +129,7 @@
 .tbody tr:last-child {
     @apply border-b-0;
 }
+
+.delete-hili {
+    @apply font-bold text-red-600;
+}

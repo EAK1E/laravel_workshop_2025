@@ -9,13 +9,15 @@ use Illuminate\Support\Facades\Validator;
 Class User extends Component {
     public $showModal = false;
     public $showModalDelete = false;
+
+    
     public $id;
     public $name;
     public $email;
     public $password;
     public $password_confirmation;
     public $level = 'user';
-    public $listlevel = ['user', 'admin'];
+    public $listLevel = ['user', 'admin'];
     public $listUser = [];
     public $error = null;
     public $errorList =[];
@@ -63,6 +65,7 @@ Class User extends Component {
         }
 
         $user->name = $this->name;
+        $user->email = $this->email;
         $user->password = $this->password;
         $user->level = $this->level;
         $user->save();
@@ -73,8 +76,8 @@ Class User extends Component {
         $this->id = null;
     }
     public function openModalEdit($id) {
-        $this->showModal = true;
         $this->id = $id;
+        $this->showModal = true;
 
         $user = UserModel::find($id);
         $this->name = $user->name;
@@ -83,7 +86,7 @@ Class User extends Component {
     }
     
     public function closeModalEdit() {
-        $this->showModalEdit = false;
+        $this->showModal = false;
     }
 
     public function openModalDelete($id, $name) {
@@ -98,7 +101,7 @@ Class User extends Component {
         UserModel::find($this->id)->delete();
 
         $this->fetchData();
-        $this->closeModalDelet();
+        $this->closeModalDelete();
     }
     public function render() {
         return view('livewire.user');

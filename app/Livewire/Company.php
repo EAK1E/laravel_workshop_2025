@@ -13,6 +13,11 @@ class Company extends Component
     use WithFileUploads;
     
     public $name, $address, $phone, $tax_code, $logo;
+    public $amount_water = 0;
+    public $amount_water_per_unit = 0;
+    public $amount_electric_per_unit = 0;
+    public $amount_internet = 0;
+    public $amount_etc = 0;
     public $logoUrl;
     public $flashMessage; //ข้อความเวลาบันทึกสำเร็จ
 

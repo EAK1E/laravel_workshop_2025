@@ -24,7 +24,7 @@
                         <td>{{ $user->level }}</td>
                         <td class="text-center">{{ date('d/m/Y', strtotime($user->create_at)) }}</td>
                         <td class="text-right">
-                            <button class="btn-edit" wire:click="openModalEdit {{ $user->id }}"><i class="fa-solid fa-pencil"></i></button>
+                            <button class="btn-edit" wire:click="openModalEdit({{ $user->id }})"><i class="fa-solid fa-pencil"></i></button>
                             <button class="btn-delete" wire:click="openModalDelete ({{ $user->id }}, '{{ $user->name }}')"><i class="fa-solid fa-times"></i></button>
                         </td>
                     </tr>
@@ -37,23 +37,25 @@
                 <div class="alert alert-danger">{{ $error }}</div>
             @endif
             
-            <div>ชื่อ</div>
-            <input type="text" wire:model="name" class="form-control" />
+            <div>ชื่อผู้ใช้</div>
+            <input type="text" wire:model="name" class="form-control">
+
             <div class="mt-4">อีเมล</div>
-            <input type="text" wire:model="email" class="form-control" />
+            <input type="text" wire:model="email" class="form-control">
 
             <div class="flex gap-2">
                 <div class="w-1/2">
                     <div class="mt-2">รหัสผ่าน</div>
-                    <input type="password" wire:model="password" class="form-control" />
-                    <div class="w-1/2">
-                        <div class="mt-2">ยืนยันรหัสผ่าน</div>
-                        <input type="password" wire:model="password_confirmation" class="form-control" />
-                    </div>
-
-                    <div class="mt-2">ระดับ</div>
+                    <input type="password" wire:model="password" class="form-control">
+                </div>
+                <div class="w-1/2">
+                    <div class="mt-2">ยืนยันรหัสผ่าน</div>
+                    <input type="password" wire:model="password_confirmation" class="form-control">
+                </div>
+            </div>
+                <div class="mt-2">ระดับ</div>
                     <select wire:model="level" class="form-control">
-                        @foreach ($listUser as $level)
+                        @foreach ($listLevel as $level)
                             <option value="{{ $level }}">{{ $level }}</option>
                         @endforeach
                     </select>
@@ -62,9 +64,8 @@
                         <button class="btn-success mr-2" wire:click="save"><i class="fa-solid fa-check mr-2"></i>บันทึก</button>
                         <button class="btn-secondary mr-2" wire:click="closeModal"><i class="fa-solid fa-times mr-2"></i>ยกเลิก</button>
                     </div>
-                </div>
-            </div>
         </x-modal>
+
         <x-modal-confirm showModalDelete="showModalDelete" title="ลบผู้ใช้งาน"
          text="คุณต้องการลบผู้ใช้งาน {{ $nameForDelete }} หรือไม่" clickConfirm="delete"
          clickCancel="closeModalDelete" />
