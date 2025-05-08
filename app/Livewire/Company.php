@@ -33,6 +33,12 @@ class Company extends Component
         $this->address = $organization->address ?? '';
         $this->phone = $organization->phone ?? '';
         $this->tax_code = $organization->tax_code ?? '';
+        //เติมหลังเพิ่ม Colum ใน Organization
+        $this->amount_water = $organization->amount_water ?? 0;
+        $this->amount_water_per_unit = $organization->amount_water_per_unit ?? 0;
+        $this->amount_electric_per_unit = $organization->amount_electric_per_unit ?? 0;
+        $this->amount_internet = $organization->amount_internet ?? 0;
+        $this->amount_etc = $organization->amount_etc ?? 0 ;
 
         if (isset($organization->logo)) {
         $this->logoUrl = Storage::disk('public')->url($organization->logo);
@@ -74,7 +80,16 @@ class Company extends Component
         $organization->address = $this->address;
         $organization->phone = $this->phone;
         $organization->tax_code = $this->tax_code;
-        $organization->logo = $logo;
+
+
+        if($logo != '' ) {
+            $organization->logo = $logo;
+        }
+        $organization->amount_water = $this->amount_water;
+        $organization->amount_water_per_unit = $this->amount_water_per_unit;
+        $organization->amount_electric_per_unit = $this->amount_electric_per_unit;
+        $organization->amount_internet = $this->amount_internet;
+        $organization->amount_etc = $this->amount_etc;
         $organization->save();
 
         $this->flashMessage = 'บันทึกข้อมูลสำเร็จ';
