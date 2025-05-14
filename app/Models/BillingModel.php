@@ -8,7 +8,7 @@ use App\Models\RoomModel;
 class BillingModel extends Model 
 {
     protected $table = 'billings';
-    protected $fillable = ['room_id', 'remark', 'status', 'amount_rent', 'amount_water', 'amount_electric', 'amount_internet', 'amount_fitness', 'amount_wash', 'amount_bin', 'amount_etc'];
+    protected $fillable = ['room_id', 'remark', 'created_at', 'status', 'amount_rent', 'amount_water', 'amount_electric', 'amount_internet', 'amount_fitness', 'amount_wash', 'amount_bin', 'amount_etc', 'money_added'];
 
     public $timestamps = false;
     public function room() {

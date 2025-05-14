@@ -5,6 +5,7 @@ use Livewire\Component;
 use App\Models\RoomModel;
 use App\Models\CustomerModel;
 use App\Models\BillingModel;
+use App\Models\OrganizationModel;
 
 class Billing extends Component {
     public $showModal = false;
@@ -35,6 +36,19 @@ class Billing extends Component {
     
     public $sumAmount = 0;
     public $roomForDelete;
+    public $waterUnit = 0;
+    public $electricUnit = 0;
+    public $waterCostPerUnit = 0;
+    public $electricCostPerUnit = 0;
+    public $roomNameForEdit = '';
+    
+    public $showModalGetMoney = false;
+    public $roomNameForGetMoney = '';
+    public $customerNameForGetMoney = '';
+    public $payedDateForGetMoney = '';
+    public $moneyAdded = 0;
+    public $remarkForGetMoney = '';
+    public $sumAmountForGetMoney = 0;
 
     public function mount() {
         $this->fetchData();
@@ -85,6 +99,19 @@ class Billing extends Component {
     public function selectedRoom() {
         $room = RoomModel::find($this->roomId);
         $customer = CustomerModel::where('room_id', $room->id)->first();
+        $organization = OrganizationModel::first();
+
+        if ($organization->amount_water > 0) {
+            $this->amountWater = $organization->amount_water;
+        } else {
+            $this->waterCostPerUnit = $organization->amount_water_per_unit;
+        }
+
+        if ($organization->amount_electric_per_unit > 0) {
+            $this->electricCostPerUnit = $organization->amount_electric_per_unit;
+        }
+        $this->amountInternet = $organization->amount_internet;
+        $this->amountEtc = $organization->amount_etc;
 
         $this->customerName = $customer->name;
         $this->customerPhone = $customer->phone;
@@ -94,6 +121,17 @@ class Billing extends Component {
     }
     
     public function computeSumAmount(){
+        if ($this->waterUnit > 0) {
+            $this->amountWater = $this->waterUnit * $this->waterCostPerUnit;
+        }
+
+        if ($this->electricUnit > 0) {
+            $this->amountElectric = $this->electricUnit * $this->electricCostPerUnit;
+        }
+
+        $this->amountWater = $this->amountWater ?? 0;
+        $this->amountElectric = $this->amountElectric ?? 0;
+
         $this->sumAmount = $this->amountRent + $this->amountWater +
         $this->amountElectric + $this->amountInternet +
         $this->amountFitness + $this->amountWash + $this->amountBin + $this->amountEtc;
@@ -123,11 +161,29 @@ class Billing extends Component {
         $this->fetchData();
 
         $this->id = null;
+        $this->waterUnit = 0;
+        $this->electricUnit = 0;
+        $this->electricCostPerUnit = 0;
+        $this->waterCostPerUnit = 0;
     }
     
     public function openModalEdit($id){
         $this->showModal = true;
-        $this->billings = BillingModel::find($id);
+        $this->billing = BillingModel::find($id);
+        //แก้ไขข้อมูล slide หน้า 286
+        $this->id = $id;
+        $this->roomId = $this->billing->room_id;
+
+        $this->selectedRoom();
+        $this->amountWater = $this->billing->amount_water;
+        $this->amountElectric = $this->billing->amount_electric;
+        
+        $this->roomNameForEdit = $this->billing->room->name;
+
+        $organization = OrganizationModel::first();
+        $this->waterUnit = $this->amountWater / $organization->amount_water_per_unit;
+        $this->electricUnit = $this->amountElectric / $organization->amount_electric_per_unit;
+        $this->computeSumAmount();
     }
 
     public function closeModalEdit() {
@@ -150,6 +206,35 @@ class Billing extends Component {
 
         $this->fetchData();
         $this->closeModalDelete();
+        return redirect()->to(request()->header('Referer'));
+
+    }
+
+    public function openModalGetMoney ($id) {
+        $billing = BillingModel::find($id);
+        $this->showModalGetMoney = true;
+        $this->id = $id;
+        $this->roomNameForGetMoney = $billing->room->name;
+        $this->customerNameForGetMoney = $billing->getCustomer()->name;
+        $this->sumAmountForGetMoney = $billing->sumAmount();
+        $this->payedDateForGetMoney = date('Y-m-d');
+        $this->moneyAdded = 0;
+        $this->remarkForGetMoney = '';
+    }
+
+    public function closeModalGetMoney (){
+        $this->showModalGetMoney = false;
+        $this->id = null;
+        $this->roomNameForGetMoney = '';
+        $this->customerNameForGetMoney = '';
+        $this->sumAmountForGetMoney = 0;
+        $this->payedDateForGetMoney = '';
+        $this->moneyAdded = 0;
+        $this->remarkForGetMoney = '';
+    }
+
+    public function printBilling($billingId) {
+        return redirect()->to('print-billing/' .$billingId);
     }
 }
 ?>

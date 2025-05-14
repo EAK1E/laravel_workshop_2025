@@ -14,7 +14,7 @@
                     <th class="text-right">ยอดเงิน</th>
                     <th class="text-center">สถานะ</th>
                     <th class="text-left">หมายเหตุ</th>
-                    <th width="190px">จัดการ</th>
+                    <th width="230px">จัดการ</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,20 +23,15 @@
                     <td class="text-left">{{ $billing->room->name }}</td>
                     <td>{{ $billing->getCustomer()->name }}</td>
                     <td>{{ $billing->getCustomer()->phone }}</td>
-                    <td>{{ date('d/m/Y', strtotime($billing->sumAmount() )) }}</td>
+                    <td>{{ date('d/m/Y', strtotime($billing->created_at )) }}</td>
                     <td class="text-right">{{ number_format($billing->sumAmount() ) }}</td>
                     <td class="text-center">{{ $billing->getStatusName() }}</td>
                     <td>{{ $billing->remark }}</td>
                     <td class="text-center">
-                            <button class="btn-edit" wire:click="printBilling({{ $billing->id }})">
-                                <i class="fa-solid fa-file-alt me-2"></i>
-                            </button>
-                            <button class="btn-edit" wire:click="openModalEdit({{ $billing->id }})">
-                                <i class="fa-solid fa-pencil me-2"></i>
-                            </button>
-                            <button class="btn-delete" wire:click="openModalDelete({{ $billing->id}}, {{ $billing->room->name }})">
-                                <i class="fa-solid fa-times me-2"></i>
-                            </button>
+                            <button class="btn-edit" wire:click="openModalGetMoney({{ $billing->id }})"><i class="fa-solid fa-dollar-sign mr-2"></i></button>
+                            <button class="btn-edit" wire:click="printBilling({{ $billing->id }})"><i class="fa-solid fa-file-alt me-2"></i></button>
+                            <button class="btn-edit" wire:click="openModalEdit({{ $billing->id }})"><i class="fa-solid fa-pencil me-2"></i></button>
+                            <button class="btn-delete" wire:click="openModalDelete({{ $billing->id }}, {{ $billing->room->name }})"><i class="fa-solid fa-times me-2"></i></button>
                     </td>
                 </tr>
                 @endforeach
@@ -48,19 +43,24 @@
         <div class="flex gap-2 justify-between">
             <div class="w-1/3">
                 <div>ห้อง</div>
+            
+            @if ($id != null)
+                <input type="text" class="form-control bg-gray-200" value="{{ $roomNameForEdit }}" readonly />
+            @else
                  <select wire:model="roomId" class="form-control" wire:change="selectedRoom()">
-                    
                         @foreach($rooms as $room)
                             <option value="{{ $room['id'] }}">
                                 {{ $room['name'] }} 
                             </option>
                         @endforeach
                  </select>
+            @endif
             </div>
-            <div class="w-1/2">
+            <div class="w-1/3">
                 <div>วันที่</div>
                 <input type="date" wire:model="createAt" class="form-control">
             </div>
+            <div class="w-1/3">
             <div>สถานะ รายการ</div>
             <select wire:model="status" class="form-control">
                 @foreach($listStatus as $status)
@@ -68,6 +68,7 @@
                 @endforeach
             </select>
         </div>
+    </div>    
     <div class="flex gap-2 mt-3">
         <div class="w-1/3">
             <div>ผู้เข้าพัก</div>
@@ -92,15 +93,35 @@
                 <tr>
                     <td>ค่าเช่าห้อง</td>
                     <td><input type="number" wire:model="amountRent" class="form-control text-right" wire:change="computeSumAmount()"></td>
-                    
                 </tr>
                 <tr>
-                    <td>ค่าน้ำ</td>
-                    <td><input type="number" wire:model="amountWater" class="form-control text-right" wire:change="computeSumAmount()"></td>
+                    <td>
+                        <div class="flex gap-2">
+                            <div class="w-1/3">ค่าน้ำ</div>
+                            <div class="w-1/3">
+                                <input type="number" wire:model="waterUnit" class="form-control text-right" wire:change="computeSumAmount()">
+                            </div>
+                            <div class="w-1/3">หน่วย</div>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" wire:model="amountWater" class="form-control text-right" wire:change="computeSumAmount()" readonly>
+                    </td>
                 </tr>
                 <tr>
-                    <td>ค่าไฟ</td>
-                    <td><input type="number" wire:model="amountElectric" class="form-control text-right" wire:change="computeSumAmount()"></td>
+                    <td>
+                        <div class="flex gap-2">
+                            <div class="w-1/3">ค่าไฟฟ้า</div>
+                            <div class="w-1/3">
+                                <input type="number" wire:model="electricUnit" class="form-control text-right" wire:change="computeSumAmount()">
+                            </div>
+                            <div class="w-1/3">หน่วย</div>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" wire:model="amountElectric" class="form-control text-right" wire:change="computeSumAmount()" readonly>
+                        
+                    </td>
                 </tr>
                 <tr>
                     <td>ค่าอินเทอร์เน็ต</td>
@@ -146,5 +167,23 @@
     showModalDelete="showModalDelete" 
     clickConfirm="deleteBilling" 
     clickCancel="closeModalDelete" />
+    
+    <x-modal class="title" title="รับเงิน" wire:model="showModalGetMoney">
+        <div>ห้อง : {{ $roomNameForGetMoney }}</div>
+        <div class="mt-3">ผู้เช่า : {{ $customerNameForGetMoney }}</div>
+        <div class="mt-3">วันที่ชำระ</div>
+            <input type="date" class="form-control" wire:model="payedDataForGetMoney" />
+            <div class="mt-3"> ยอดรวมค่าใช้จ่าย : <span class="font-bold text-4xl text-red-950"> {{ number_format($sumAmountForGetMoney)}} </span> บาท</div>
+            <div class="mt-3"> ยอดรับเงิน</div>
+                <input type="number" class="form-control" wire:model="moneyAdded" />
+            <div class="mt-3">หมายเหตุ</div>
+            <input type="text" class="form-control" wire:model="remarlForGetMoney">
+
+            <div class="text-center mt-5">
+                <button class="btn-success" wire:click="saveGetMoney()"><i class="fa-solid fa-check mr-2"></i>บันทึก</button>
+                <button class="btn-danger" wire:click="closeModalGetMoney()"><i class="fa-solid fa-times"></i>ยกเลิก</button>
+            </div>
+    </x-modal>
 
 </div>
+

@@ -74,7 +74,7 @@
         </button>
 
         @if ($flashMessage)
-            <div class="mt-3 alert-success">
+            <div class="mt-3 alert alert-success">
                 <i class="fa fa-check mr-2"></i>
                 {{ $flashMessage }}
             </div>

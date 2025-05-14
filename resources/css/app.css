@@ -3,8 +3,16 @@
 @tailwind utilities;
 @import 'tailwindcss';
 
+.title {
+    @apply bg-blue-900;
+}
+
 .btn {
     @apply bg-blue-500 text-white px-4 py-2 rounded-md;
+}
+
+.btn-yell {
+    @apply hover:bg-yellow-500;
 }
 
 .btn-edit {

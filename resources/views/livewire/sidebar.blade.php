@@ -18,7 +18,7 @@
 
                 <li>
                     <a href="/company/index" wire:navigate>
-                    <i class="fa-solid fa-building me-2"></i>เมนูที่ 5</li>
+                    <i class="fa-solid fa-building me-2"></i>ข้อมูลสถานที่</li>
                     </a>
             </ul>
         </div>
