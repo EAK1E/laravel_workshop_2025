@@ -2,7 +2,6 @@
 <h4>{{ $organization->name }}</h4>
 
 <div>ของเดือน {{ date('m/Y', strtotime($billing->created_at)) }}</div>
-
 <div>ห้องที่ {{ $billing->room->name }}</div>
 <div>ผู้เช่า {{ $billing->getCustomer()->name }}</div>
 <div>เบอร์โทรศัพท์ {{ $billing->getCustomer()->phone }}</div>
