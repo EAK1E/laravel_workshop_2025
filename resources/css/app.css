@@ -157,3 +157,11 @@
 .box-pay {
     @apply text-white bg-gradient-to-b from-stone-400 to-stone-600 p-4 rounded-lg w-full;
 }
+
+.box-balance-positive {
+    @apply text-white bg-gradient-to-b from-green-400 to-green-600 p-4 rounded-lg w-full;
+}
+
+.box-balance-negative {
+    @apply text-white bg-gradient-to-b from-red-400 to-red-600 p-4 rounded-lg w-full;
+}
