@@ -10,7 +10,8 @@
                     <th class="text-left">ห้อง</th>
                     <th class="text-left">ผู้เข้าพัก</th>
                     <th class="text-left">เบอร์โทร</th>
-                    <th class="text-left">วันที่</th>
+                    <th class="text-left">วันที่สร้าง</th>
+                    <th class="text-left">วันที่จ่าย</th>
                     <th class="text-right">ยอดเงิน</th>
                     <th class="text-center">สถานะ</th>
                     <th class="text-left">หมายเหตุ</th>
@@ -24,6 +25,7 @@
                     <td>{{ $billing->getCustomer()->name }}</td>
                     <td>{{ $billing->getCustomer()->phone }}</td>
                     <td>{{ date('d/m/Y', strtotime($billing->created_at )) }}</td>
+                    <td>{{ date('d/m/Y', strtotime($billing->payed_date )) }}</td>
                     <td class="text-right">{{ number_format($billing->sumAmount() ) }}</td>
                     <td class="text-center">
                         @if ($billing->status == 'paid')
@@ -69,8 +71,8 @@
             @endif
             </div>
             <div class="w-1/3">
-                <div>วันที่</div>
-                <input type="date" wire:model="createAt" class="form-control">
+                <div>วันที่สร้างบิล</div>
+                <input type="date" wire:model="createdAt" class="form-control">
             </div>
             <div class="w-1/3">
             <div>สถานะ รายการ</div>
@@ -195,7 +197,7 @@
         </div>
         <div class="mt-3">ผู้เช่า : {{ $customerNameForGetMoney }}</div>
         <div class="mt-3">วันที่ชำระ</div>
-            <input type="date" class="form-control" wire:model="payedDataForGetMoney" />
+            <input type="date" class="form-control" wire:model="payedDateForGetMoney" />
             <div class="mt-3"> ยอดรวมค่าใช้จ่าย : <span class="font-bold text-4xl text-white showdow-md"> {{ number_format($sumAmountForGetMoney)}} </span> บาท</div>
 
             <div class="flex gap-2 mt-3">

@@ -1,6 +1,33 @@
 <div>
     <div class="content-header"></div>
     <div class="content-body">
+
+        <div class="flex gap-2 mb-4 items-center">
+            <div class="w-[50px] text-right mr-1"> ปี</div>
+                <div class="w-[100px]">
+                    <select class="form-control" wire:model="selectedYear">
+                        @foreach($yearList as $year)
+                            <option value="{{ $year }}"> {{ $year }}</option>
+                        @endforeach
+                    </select>
+            </div>
+
+            <div class="w-[50px] text-right mr-1">เดือน</div>
+                <div class="w-[200px]">
+                    <select class="form-control" wire:model="selectedMonth">
+                        @foreach($monthList as $index => $month)
+                            <option value="{{ $index + 1 }}"> {{ $month }} </option>
+                        @endforeach
+                    </select>
+            </div>
+            <div class="w-[200px]">
+                <button class="btn-info ml-2" wire:click="loadNewData">
+                    <i class="fa-solid fa-magnifying-glass mr-2"></i>
+                        แสดงรายการ
+                </button>
+            </div>
+        </div>
+
         <div class="flex gap-4 text-right">
             <div class="box-income">
                 <div class="font-bold text-xl"><i class="fa-solid fa-coins mr-2"></i>รายได้</div>
@@ -36,7 +63,11 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
         document.addEventListener('livewire:init', function() {
-            var options = {
+            var incomeChart = null;
+            var pieChart = null;
+
+        function initIncomeChart() {
+            const options = {
                 chart : {
                     type : 'bar',
                     height: 350
@@ -46,21 +77,26 @@
                     data : @json(array_values($incomeInMonths))
                 }],
                 xaxis : {
-                    categories : ['ม.ก.','ก.พ.','มี.ค.','เม.ย','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.']
+                    categories : [
+                        'ม.ก.','ก.พ.','มี.ค.','เม.ย',
+                        'พ.ค.','มิ.ย.','ก.ค.','ส.ค.',
+                        'ก.ย.','ต.ค.','พ.ย.','ธ.ค.'
+                    ]
                 },
                 title : {
                     text: 'รายได้รายเดือน',
                     align: 'center'
                 }
-            }
+            };
 
-            var chart = new ApexCharts(document.querySelector("#incomeChart"), options);
+            incomeChart = new ApexCharts(document.querySelector("#incomeChart"), options);
+            incomeChart.render();
+        }
 
-            chart.render();
-
-            //piechart รายวัน รายเดือน
-            var pieOptions = {
-                series : @json($incomePie),
+        //piechart รายวัน รายเดือน
+        function initPieChart() {
+            const pieOptions = {
+                series : @json(array_values($incomePie)),
                 chart: {
                     type : 'pie',
                     height : 350
@@ -70,11 +106,13 @@
                     text : 'รายได้รายประเภท',
                     align : 'center'
                 }
-            }
-
-            var pieChart = new ApexCharts(document.querySelector("#pieChart"), pieOptions);
+            };
+            pieChart = new ApexCharts(document.querySelector("#pieChart"), pieOptions);
             pieChart.render();
-        });
+        }
+        initIncomeChart();
+        initPieChart();
+    });
     </script>
 @endpush
 
