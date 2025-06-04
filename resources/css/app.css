@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import 'tailwindcss';
 
 .title {
     @apply bg-white;
@@ -83,7 +82,7 @@
 }
 
 .menu {
-    @apply mb-4
+    @apply mb-4;
 }
 
 .menu li {
@@ -91,11 +90,11 @@
 }
 
 .logoutbtn {
-    @apply hover:text-red-600
+    @apply hover:text-red-600;
 }
 
 .active {
-    @apply bg-blue-500 text-gray-800
+    @apply bg-blue-500 text-gray-800;
 }
 
 .btn-edit {

@@ -88,7 +88,6 @@ class Dashboard extends Component {
         $this->incomeInMonths[$i] = $sum;
         }
     
-    /* Log::info('incomeInMonth', $this->incomeInMonths); */
     
     // random income per 12 month
 /*     for ($i = 1; $i <= 12; $i++) {
